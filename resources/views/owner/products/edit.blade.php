@@ -102,7 +102,15 @@
                                 <button type="submit" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新する</button>
                             </div>
                         </div>
-                    </form>        
+                    </form>
+                    <form id="delete_{{$product->id}}" method="post" action="{{ route('owner.products.destroy', ['product' => $product->id])}}">
+                        @method('delete')
+                        @csrf
+                        <div class="md:px-4 py-3">
+                            <div class="p-2 w-full flex justify-around mt-32">
+                            <a href="#" data-id="{{ $product->id }}" onclick="deletePost(this)" class="flex mx-auto text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded text-lg">削除</a>
+                        </div>
+                    </form>    
                 </div>
             </div>
         </div>
@@ -124,5 +132,11 @@
         }, )
         })  
     
-      </script>
+        function deletePost(e) {
+            'use strict';
+            if (confirm('本当に削除していいですか?')) {
+                document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+    </script>
 </x-app-layout>
